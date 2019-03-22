@@ -1,5 +1,9 @@
 /* global AFRAME, AFK */
 
+if (typeof AFRAME === 'undefined') {
+    throw new Error('Component attempted to register before AFRAME was available.');
+}
+
 AFRAME.registerComponent('a-keyboard', {
     schema: {
         model: {default: ''},
@@ -13,9 +17,13 @@ AFRAME.registerComponent('a-keyboard', {
     },
   
     init: function() {
+        const el = this.el
+        const locale = this.data.locale
+        const model = this.data.model
+        const font = this.data.font
+        console.log('initializing a-keyboard')
         // Initialize keyboard (create / draw elements)
-        
-
+        AFK.template.draw({locale, model, font, el})
         // If has custom model or fonts, load them into the required elements
 
         // Set up event listeners based on this.interactionMode
@@ -38,8 +46,7 @@ AFRAME.registerComponent('a-keyboard', {
     },
   
     remove: function() {
-        this.el.removeEventListener('connect', this.connect);
-        AFK.connection.disconnect();
+        
     }
   });
   

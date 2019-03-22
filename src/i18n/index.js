@@ -1,10 +1,12 @@
-import English from './en'
+const english = require('./en')
 
-export function getIntl(locale) {
+function getIntl(locale) {
     switch(locale) {
         case 'en': 
-            return English
+            return english
         default:
-            return English
+            return english
     }
 }
+
+module.exports = getIntl
