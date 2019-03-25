@@ -4,6 +4,7 @@ let coordinates = require('./keyCoords')
 class KeyboardTemplate {
     constructor() {
         this.keyboardKeys = {}
+        this.dismissable = true
         this.activeMode = 'normal' // 'normal', 'shift', 'alt', 'alt-shift'
         this.color = '#000'
     }
@@ -11,6 +12,7 @@ class KeyboardTemplate {
     draw(options) {
         this.parentEl = options.el
         this.color = options.color
+        this.dismissable = options.dismissable
         this.keyboardKeys = getIntl(options.locale)
         this.drawKeyboard()
     }
@@ -32,7 +34,7 @@ class KeyboardTemplate {
         button.setAttribute('material', 'color: #ccc')
 
         const buttonTextPlane = document.createElement('a-text')
-        buttonTextPlane.id = `a-keyboard-${key.value}`
+        buttonTextPlane.id = `a-keyboard-${key.code}`
         buttonTextPlane.setAttribute('key-code', key.code)
         buttonTextPlane.setAttribute('value', key.value)
         buttonTextPlane.setAttribute('align', 'center')
@@ -61,27 +63,29 @@ class KeyboardTemplate {
                 let keys = keyRows[i].split(' ')
                 for(let k = 0; k < keys.length; k++) {
                     const key = this.parseSymbols(keys[k])
+                    if(!this.dismissable && key.code === '27') {
+                        continue
+                    }
+
+                    if(!this.keyboardKeys.alt && key.code === '18') {
+                        continue
+                    }
+
+                    if(!this.keyboardKeys.alt && key.code === '18') {
+                        continue
+                    }
                     this.drawButton({key, row: i, column: k})
                 }
             }
         }
     }
 
-    toggleActiveMode(mode) {
-        if(this.activeMode === 'shift') {
-            this.activeMode = 'normal'
-        } else if(this.activeMode === 'alt-shift') {
-            this.activeMode = 'alt'
-        } else {
-            this.activeMode = mode
-        }
+    toggleActiveMode() {
+        this.activeMode === 'shift' ? this.activeMode = 'normal' : this.activeMode = 'shift'
         this.drawKeyboard()
     }
 
     parseSymbols(key) {
-        if(key.substring(0, 2) === '\\u') {
-            return {value: String.fromCharCode(key), code: key}
-        }
         switch(key) {
         case '{enter}':
             return {value: 'Enter', code: '13'}
@@ -89,16 +93,16 @@ class KeyboardTemplate {
             return {value: 'Tab', code: '9'}
         case '{shift}':
             return {value: 'Shift', code: '16'}
-        case '{alt}':
-            return {value: 'Alt', code: '18'}
         case '{space}':
             return {value: ' ', code: '32'}
         case '{empty}':
             return {value: '', code: ''}
         case '{cancel}':
-            return {value: 'Cancel', code: ''}
+            return {value: 'Cancel', code: '27'}
         case '{bksp}':
-            return {value: '<-', code: ''}
+            return {value: '<-', code: '8'}
+        case '{submit}':
+            return {value: 'Submit', code: '999'}
         default: 
             return {value: key, code: key.charCodeAt(0)}
         }

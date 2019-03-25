@@ -30,6 +30,7 @@ AFRAME.registerComponent('keyboard-button', {
 
 AFRAME.registerComponent('a-keyboard', {
     schema: {
+        dismissable: {default: true},
         model: {default: ''},
         font: {default: 'Helvetica'},
         color: {default: '#000'},
@@ -42,54 +43,69 @@ AFRAME.registerComponent('a-keyboard', {
   
     init: function() {
         const el = this.el
+        const dismissable = this.data.dismissable
         const locale = this.data.locale
         const model = this.data.model
         const font = this.data.font
         const color = this.data.color
         
-        AFK.template.draw({locale, model, font, el, color})
+        AFK.template.draw({locale, model, font, el, color, dismissable})
 
         this.attachEventListeners()
     },
 
     attachEventListeners: function() {
-        document.querySelector('#keyboard').addEventListener('click', this.handleKeyboardVR)
         window.addEventListener("keydown", this.handleKeyboardPress);
+        document.querySelector('#keyboard').addEventListener('click', this.handleKeyboardVR)
+    },
+
+    removeEventListeners: function() {
+        window.removeEventListener("keydown", this.handleKeyboardPress);
+        document.querySelector('#keyboard').removeEventListener('click', this.handleKeyboardVR)
     },
 
     handleKeyboardPress: function(e) {
         let inputEvent;
+        const code = e.key.charCodeAt(0)
         switch(e.keyCode) {
+        case 9: // tab
+            inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: '\t'}})
+            document.dispatchEvent(inputEvent)
+            break
+        case 8: // backspace
+            inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: ''}})
+            document.dispatchEvent(inputEvent)
+            break
         case 13: // enter
             inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: '\n'}})
             document.dispatchEvent(inputEvent)
             break
-        case 8: // backspace
-            break
-        case 9: // tab
-            break
         case 16: // shift
-            AFK.template.toggleActiveMode('shift')
             break
         case 18: // alt
-            if(AFK.template.activeMode === 'shift') {
-                AFK.template.toggleActiveMode('alt-shift')
-            } else {
-                AFK.template.toggleActiveMode('alt')
+            break
+        case 27: // esc
+            if (this.dismissable) {
+                inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: ''}})
+                document.dispatchEvent(inputEvent)
             }
             break
+        case 32: // space
+            inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: ' '}})
+            document.dispatchEvent(inputEvent)
+            break
         default:
-            inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: e.key}})
+            inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value: e.key}})
             document.dispatchEvent(inputEvent)
             break
         }
 
         // Artificially trigger keypress events
-        if (document.querySelector(`#a-keyboard-${e.key}`)) {
-            document.querySelector(`#a-keyboard-${e.key}`).dispatchEvent(new Event('mousedown'))
+        if (document.querySelector(`#a-keyboard-${code}`)) {
+            document.querySelector(`#a-keyboard-${code}`).dispatchEvent(new Event('mousedown'))
             setTimeout(function(){
-                 document.querySelector(`#a-keyboard-${e.key}`).dispatchEvent(new Event('mouseleave'))
-            }, 100);
+                 document.querySelector(`#a-keyboard-${code}`).dispatchEvent(new Event('mouseleave'))
+            }, 80);
         }
     },
 
@@ -103,18 +119,19 @@ AFRAME.registerComponent('a-keyboard', {
             document.dispatchEvent(inputEvent)
             break
         case '8': // backspace
+            inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: 8, value: ''}})
+            document.dispatchEvent(inputEvent)
             break
         case '9': // tab
+            inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value: '\t'}})
+            document.dispatchEvent(inputEvent)
             break
         case '16': // shift
-            AFK.template.toggleActiveMode('shift')
+            AFK.template.toggleActiveMode()
             break
-        case '18': // alt
-            if(AFK.template.activeMode === 'shift') {
-                AFK.template.toggleActiveMode('shift-alt')
-            } else {
-                AFK.template.toggleActiveMode('alt')
-            }
+        case '32': // space
+            inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value: ' '}})
+            document.dispatchEvent(inputEvent)
             break
         default:
             inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value}})
@@ -125,6 +142,6 @@ AFRAME.registerComponent('a-keyboard', {
     },
   
     remove: function() {
-        
+        this.removeEventListeners()
     }
   });
