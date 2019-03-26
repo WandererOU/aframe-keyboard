@@ -1,12 +1,17 @@
-export default {
-    '48': {value: '0'},
-    '49': {value: '1'},
-    '50': {value: '2'},
-    '51': {value: '3'},
-    '52': {value: '4'},
-    '53': {value: '5'},
-    '54': {value: '6'},
-    '55': {value: '7'},
-    '56': {value: '8'},
-    '57': {value: '9'},
+module.exports = {
+    name : 'ms-US-International',
+    normal : [
+        '` 1 2 3 4 5 6 7 8 9 0 - = {bksp}',
+        '{tab} q w e r t y u i o p [ ]',
+        '{empty} a s d f g h j k l ; \' \u005C {enter}',
+        '{shift} z x c v b n m , . / {shift}',
+        '{cancel} {space} {submit}'
+    ],
+    shift : [
+        '~ ! @ # $ % ^ & * ( ) _ + {bksp}',
+        '{tab} Q W E R T Y U I O P { }',
+        'A S D F G H J K L : \u0022 | {enter}',
+        '{shift} Z X C V B N M < > ? {shift}',
+        '{cancel} {alt} {space} {alt} {submit}'
+    ]
 }

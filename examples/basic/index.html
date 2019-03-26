@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, viewport-fit=cover">
+        <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+        <script>window.AFK || document.write('<script src="../../dist/aframe-keyboard.min.js">\x3C/script>')</script>
+        <title>Keyboard Sample</title>
+        <style>
+            body {
+                font-size: 62.5%;
+                overflow: hidden;
+            }
+            html, body, canvas {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <a-scene keyboard-shortcuts="enterVR: false">
+            <!-- environment -->
+            <a-sky color="#ECECEC"></a-sky>
+            <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+            <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+            <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+            <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+
+            <!-- keyboard -->
+            <a-text id="input" font="dejavu" color="#000" value="Input value..." scale="0.5 0.5 0.5" position="0 2 -1"></a-text>
+            <a-entity id="keyboard" position="0 1.6 -0.5" a-keyboard></a-entity>
+
+            <!-- Mouse input -->
+            <a-entity id="mouseCursor" raycaster="objects: .collidable" cursor="rayOrigin: mouse"></a-entity>
+        </a-scene>
+        <noscript>Please turn on Javascript to view this website.</noscript>
+        <script>
+            var input = ''
+            function updateInput(e) {
+                var code = parseInt(e.detail.code)
+                switch(code) {
+                case 8:
+                    input = input.slice(0, -1)
+                    break
+                case 999:
+                alert('submitted')
+                    var keyboard = document.querySelector('#keyboard')
+                    document.querySelector('#input').setAttribute('value', input)
+                    document.querySelector('#input').setAttribute('color', 'blue')
+                    keyboard.parentNode.removeChild(keyboard)
+                    return
+                default:
+                    input = input + e.detail.value
+                    break
+                }
+                document.querySelector('#input').setAttribute('value', input + '_')
+            }
+            document.addEventListener('a-keyboard-update', updateInput)
+
+        </script>
+    </body>
+</html> 
