@@ -7,11 +7,13 @@ class KeyboardTemplate {
         this.dismissable = true
         this.activeMode = 'normal' // 'normal', 'shift', 'alt', 'alt-shift'
         this.color = '#000'
+        this.font = ''
     }
 
     draw(options) {
         this.parentEl = options.el
         this.color = options.color
+        this.font = options.font
         this.dismissable = options.dismissable
         this.keyboardKeys = getIntl(options.locale)
         this.drawKeyboard()
@@ -44,6 +46,7 @@ class KeyboardTemplate {
         buttonTextPlane.setAttribute('material', "opacity: 0.0; transparent: true; color: #000")
         buttonTextPlane.setAttribute('wrap-count', '40')
         buttonTextPlane.setAttribute('color', this.color)
+        buttonTextPlane.setAttribute('font', this.font)
         buttonTextPlane.setAttribute('keyboard-button', true)
         buttonTextPlane.setAttribute('class', 'collidable')
 

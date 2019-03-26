@@ -32,7 +32,7 @@ AFRAME.registerComponent('a-keyboard', {
     schema: {
         dismissable: {default: true},
         model: {default: ''},
-        font: {default: 'Helvetica'},
+        font: {default: 'dejavu'},
         color: {default: '#000'},
         handleUpdate: {type: 'string'},
         locale: {default: 'en'},
@@ -61,7 +61,9 @@ AFRAME.registerComponent('a-keyboard', {
 
     removeEventListeners: function() {
         window.removeEventListener("keydown", this.handleKeyboardPress);
-        document.querySelector('#keyboard').removeEventListener('click', this.handleKeyboardVR)
+        if(document.querySelector('#keyboard')) {
+            document.querySelector('#keyboard').removeEventListener('click', this.handleKeyboardVR)
+        }
     },
 
     handleKeyboardPress: function(e) {
