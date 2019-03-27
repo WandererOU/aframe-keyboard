@@ -29,6 +29,8 @@ This project is written purely with javascript, and it makes use of custom event
 | color | The color of fonts used in the keyboard | '#000' |
 | locale | Sets which keyboard will be utilized from the `i18n` folder. Currently only `en` is supported, but additional language support is planned | 'en' |
 | audio | (WIP) Relative path to sounds that should be player when a key is pressed | '' |
+| fontSize | Size of each character printed (in aframe units) | '0.35' |
+| verticalAlign | Setting the text's [baseline](https://aframe.io/docs/0.9.0/components/text.html#properties_baseline), can be set as `top`, `center`, and `bottom`  | 'center' |
 
 ## Release History
 * 0.0.1 (Work in progress)
@@ -43,7 +45,7 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 ## Roadmap (order of priority)
 - [ ] Adding automated tests 
 - [ ] Improve event handling of misc keys (Ctrl, Alt, Home, End, etc)
-- [ ] Create grid-like layout to automatically render keyboard as it parses `i18n` files
+- [x] Create grid-like layout to automatically render keyboard as it parses `i18n` files
 - [ ] Add support for custom fonts
 - [ ] Improving base keyboard models
 - [ ] Add support for custom keyboard key models

@@ -1,11 +1,11 @@
-const english = require('./en')
+const en = require('./en')
 
 function getIntl(locale) {
     switch(locale) {
         case 'en': 
-            return english
+            return en
         default:
-            return english
+            return en
     }
 }
 
