@@ -7,14 +7,15 @@ class KeyboardTemplate {
         this.dismissable = true
         this.activeMode = 'normal' // 'normal', 'shift', 'alt', 'alt-shift'
         this.color = '#000'
-        this.font = ''
     }
 
     draw(options) {
         this.parentEl = options.el
         this.color = options.color
         this.font = options.font
+        this.fontSize = options.fontSize
         this.dismissable = options.dismissable
+        this.verticalAlign = options.verticalAlign
         this.keyboardKeys = getIntl(options.locale)
         this.drawKeyboard()
     }
@@ -25,14 +26,13 @@ class KeyboardTemplate {
     
     drawButton(options) {
         const key = options.key
-        const position = this.getKeyPosition(options.row, options.column)
-
+        const width = key.size.split(' ')[0]
+        const height = key.size.split(' ')[1]
         const buttonContainer = document.createElement('a-entity')
-        buttonContainer.setAttribute('position', position)
+        buttonContainer.setAttribute('position', options.position)
 
         const button = document.createElement('a-entity')
-        button.setAttribute('scale', '0.03 0.03 0.013')
-        button.setAttribute('geometry', 'primitive: box')
+        button.setAttribute('geometry', `primitive: box; width: ${width}; height: ${height}; depth: 0.013`)
         button.setAttribute('material', 'color: #ccc')
 
         const buttonTextPlane = document.createElement('a-text')
@@ -40,13 +40,15 @@ class KeyboardTemplate {
         buttonTextPlane.setAttribute('key-code', key.code)
         buttonTextPlane.setAttribute('value', key.value)
         buttonTextPlane.setAttribute('align', 'center')
+        buttonTextPlane.setAttribute('baseline', this.verticalAlign)
         buttonTextPlane.setAttribute('position', '0 0 0.01')
-        buttonTextPlane.setAttribute('width', '0.35')
-        buttonTextPlane.setAttribute('geometry', 'primitive: plane; width: 0.03; height: 0.03')
+        buttonTextPlane.setAttribute('width', this.fontSize)
+        buttonTextPlane.setAttribute('height', this.fontSize)
+        buttonTextPlane.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height}`)
         buttonTextPlane.setAttribute('material', "opacity: 0.0; transparent: true; color: #000")
-        buttonTextPlane.setAttribute('wrap-count', '40')
         buttonTextPlane.setAttribute('color', this.color)
         buttonTextPlane.setAttribute('font', this.font)
+        buttonTextPlane.setAttribute('shader', 'msdf')
         buttonTextPlane.setAttribute('keyboard-button', true)
         buttonTextPlane.setAttribute('class', 'collidable')
 
@@ -60,24 +62,38 @@ class KeyboardTemplate {
         while (this.parentEl.firstChild) {
             this.parentEl.removeChild(this.parentEl.firstChild);
         }
+
         if(this.keyboardKeys) {
             const keyRows = this.keyboardKeys[this.activeMode]
+            const KEY_PADDING = 0.01
+            const KEY_SIZE = 0.03
+    
+            const keyboard = document.createElement('a-entity')
+            const keyboardWidth = KEY_SIZE * 11 + KEY_PADDING * 12
+            const keyboardHeight = KEY_SIZE * keyRows.length + KEY_PADDING * (keyRows.length + 1)
+
+            keyboard.setAttribute('position', `${(keyboardWidth / 2) - KEY_PADDING} ${(-keyboardHeight / 2) + KEY_PADDING} -0.01`)
+            keyboard.setAttribute('geometry', `primitive: box; width: ${keyboardWidth}; height: ${keyboardHeight}; depth: 0.01`)
+            keyboard.setAttribute('material', 'color: #000')
+            this.parentEl.appendChild(keyboard)
+
+            let positionY = 0
             for(let i = 0; i < keyRows.length; i++) {
-                let keys = keyRows[i].split(' ')
-                for(let k = 0; k < keys.length; k++) {
-                    const key = this.parseSymbols(keys[k])
-                    if(!this.dismissable && key.code === '27') {
+                const keys = keyRows[i]
+                let positionX = 0
+                for(let j = 0; j < keys.length; j++) {
+                    const keyObject = keys[j]
+                    const key = this.parseKeyObjects(keyObject)
+                    if (!this.dismissable && keyObject.type === 'cancel') {
                         continue
                     }
-
-                    if(!this.keyboardKeys.alt && key.code === '18') {
-                        continue
+                    const width = key.size.split(' ')[0]
+                    const height = key.size.split(' ')[1]
+                    this.drawButton({key, position: `${positionX + width / 2} ${positionY - height / 2} 0`})
+                    positionX += parseFloat(width) + KEY_PADDING
+                    if (keys.length === (j + 1)) {
+                        positionY -= KEY_SIZE + KEY_PADDING
                     }
-
-                    if(!this.keyboardKeys.alt && key.code === '18') {
-                        continue
-                    }
-                    this.drawButton({key, row: i, column: k})
                 }
             }
         }
@@ -88,26 +104,26 @@ class KeyboardTemplate {
         this.drawKeyboard()
     }
 
-    parseSymbols(key) {
-        switch(key) {
-        case '{enter}':
-            return {value: 'Enter', code: '13'}
-        case '{tab}':
-            return {value: 'Tab', code: '9'}
-        case '{shift}':
-            return {value: 'Shift', code: '16'}
-        case '{space}':
-            return {value: ' ', code: '32'}
-        case '{empty}':
-            return {value: '', code: ''}
-        case '{cancel}':
-            return {value: 'Cancel', code: '27'}
-        case '{bksp}':
-            return {value: '<-', code: '8'}
-        case '{submit}':
-            return {value: 'Submit', code: '999'}
+    parseKeyObjects(keyObject) {
+        const type = keyObject.type
+        const value = keyObject.value
+        switch(type) {
+        case 'delete':
+            return {size: '0.03 0.03 0.013', value, code: '8'}
+        case 'enter':
+            return {size: '0.03 0.07 0.013', value, code: '13'}
+        case 'shift':
+            return {size: '0.07 0.03 0.013', value, code: '16'}
+        case 'alt':
+            return {size: '0.07 0.03 0.013', value, code: '18'}
+        case 'space':
+            return {size: '0.19 0.03 0.013', value, code: '32'}
+        case 'cancel':
+            return {size: '0.07 0.03 0.013', value, code: '998'}
+        case 'submit':
+            return {size: '0.07 0.03 0.013', value, code: '999'}
         default: 
-            return {value: key, code: key.charCodeAt(0)}
+            return {size: '0.03 0.03 0.013', value, code: value.charCodeAt(0)}
         }
     }
 }

@@ -33,23 +33,24 @@ AFRAME.registerComponent('a-keyboard', {
         dismissable: {default: true},
         model: {default: ''},
         font: {default: 'dejavu'},
+        fontSize: {default: '0.35'},
+        verticalAlign: {default: 'center'},
         color: {default: '#000'},
-        handleUpdate: {type: 'string'},
         locale: {default: 'en'},
-        value: {default: ''},
         audio: {default: false}, // Only if adapter supports audio
-        interactionMode: {default: 'desktop'}, // 'desktop', 'vr', 'mobile'
     },
   
     init: function() {
-        const el = this.el
-        const dismissable = this.data.dismissable
-        const locale = this.data.locale
-        const model = this.data.model
-        const font = this.data.font
-        const color = this.data.color
-        
-        AFK.template.draw({locale, model, font, el, color, dismissable})
+        AFK.template.draw({
+            locale: this.data.locale,
+            model: this.data.model,
+            font: this.data.font,
+            fontSize: this.data.fontSize,
+            el: this.el,
+            color: this.data.color,
+            dismissable: this.data.dismissable,
+            verticalAlign: this.data.verticalAlign,
+        })
 
         this.attachEventListeners()
     },
@@ -103,10 +104,11 @@ AFRAME.registerComponent('a-keyboard', {
         }
 
         // Artificially trigger keypress events
-        if (document.querySelector(`#a-keyboard-${code}`)) {
-            document.querySelector(`#a-keyboard-${code}`).dispatchEvent(new Event('mousedown'))
+        const key = document.querySelector(`#a-keyboard-${code}`) || document.querySelector(`#a-keyboard-${e.keyCode}`)
+        if (key) {
+            key.dispatchEvent(new Event('mousedown'))
             setTimeout(function(){
-                 document.querySelector(`#a-keyboard-${code}`).dispatchEvent(new Event('mouseleave'))
+                key.dispatchEvent(new Event('mouseleave'))
             }, 80);
         }
     },
