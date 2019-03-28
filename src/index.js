@@ -1,9 +1,9 @@
-require('./components/aframe-keyboard')
-var KeyboardTemplate = require('./keyboardTemplate')
+require('./components/aframe-keyboard');
+require('./components/keyboard-button');
+const KeyboardTemplate = require('./keyboardTemplate');
 
-let keyboard = {}
+const keyboard = {};
+keyboard.mode = 'normal';
+keyboard.template = new KeyboardTemplate();
 
-keyboard.mode = 'normal'
-keyboard.template = new KeyboardTemplate()
-
-module.exports = window.AFK = keyboard
+module.exports = window.AFK = keyboard;

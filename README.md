@@ -36,6 +36,8 @@ This project is written purely with javascript, and it makes use of custom event
 * 0.0.1 (Work in progress)
     * Added `color` option to define which colors the text should be rendered with
     * Added `dismissable` option to define whether keyboard can be dismissed before being "Submitted"
+    * Added `fontSize` option to set how big keys should look
+    * Added `verticalAlign` option to set the `baseline` property of texts
     * Added `font` option where you can choose from one of the [stock fonts](https://aframe.io/docs/0.9.0/components/text.html#stock-fonts) to be used in the keyboard
     * Added basic coordinate-based layout to keyboard (looking for a fancier method that allows for customized layouts with differing button sizes and colors)
 

@@ -32,7 +32,7 @@
             <a-entity
                 id="keyboard"
                 position="-0.2 1.6 -0.5"
-                a-keyboard="font: monoid; fontSize: 0.35; verticalAlign: center;"
+                a-keyboard
             >
             </a-entity>
 
@@ -49,7 +49,7 @@
                     input = input.slice(0, -1)
                     break
                 case 999:
-                alert('submitted')
+                    alert('submitted')
                     var keyboard = document.querySelector('#keyboard')
                     document.querySelector('#input').setAttribute('value', input)
                     document.querySelector('#input').setAttribute('color', 'blue')
