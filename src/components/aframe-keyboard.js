@@ -3,61 +3,31 @@ if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
 }
 
-AFRAME.registerComponent('keyboard-button', {
-  init: function() {
-    const el = this.el;
-    const self = this;
-    el.addEventListener('mousedown', function() {
-      el.setAttribute('material', 'opacity', '0.7');
-    });
-
-    el.addEventListener('mouseup', function() {
-      el.setAttribute('material', 'opacity', self.isMouseEnter ? '0.4' : '0');
-    });
-
-    el.addEventListener('mouseenter', function() {
-      el.setAttribute('material', 'opacity', '0.4');
-      self.isMouseEnter = true;
-    });
-
-    el.addEventListener('mouseleave', function() {
-      el.setAttribute('material', 'opacity', '0');
-      self.isMouseEnter = false;
-    });
-  },
-});
-
 AFRAME.registerComponent('a-keyboard', {
   schema: {
+    audio: {default: false}, // Only if adapter supports audio
+    color: {default: '#000'},
     dismissable: {default: true},
-    model: {default: ''},
     font: {default: 'monoid'},
     fontSize: {default: '0.35'},
-    verticalAlign: {default: 'center'},
-    color: {default: '#000'},
     locale: {default: 'en'},
-    audio: {default: false}, // Only if adapter supports audio
+    model: {default: ''},
+    verticalAlign: {default: 'center'},
   },
 
   init: function() {
-    const options = {};
-    for (option in this.data) {
-      options[option] = this.data[option];
-    }
-    AFK.template.draw({...options, el: this.el});
+    AFK.template.draw({...this.data, el: this.el});
     this.attachEventListeners();
   },
 
   attachEventListeners: function() {
     window.addEventListener('keydown', this.handleKeyboardPress);
-    document.querySelector('#keyboard').addEventListener('click', this.handleKeyboardVR);
+    this.el.addEventListener('click', this.handleKeyboardVR);
   },
 
   removeEventListeners: function() {
     window.removeEventListener('keydown', this.handleKeyboardPress);
-    if (document.querySelector('#keyboard')) {
-      document.querySelector('#keyboard').removeEventListener('click', this.handleKeyboardVR);
-    }
+    this.el.removeEventListener('click', this.handleKeyboardVR);
   },
 
   handleKeyboardPress: function(e) {

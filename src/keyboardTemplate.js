@@ -23,10 +23,7 @@ class KeyboardTemplate {
     buttonContainer.setAttribute('position', options.position);
 
     const button = document.createElement('a-entity');
-    button.setAttribute(
-        'geometry',
-        `primitive: box; width: ${width}; height: ${height}; depth: 0.013`
-    );
+    button.setAttribute('geometry', `primitive: box; width: ${width}; height: ${height}; depth: 0.013`);
     button.setAttribute('material', 'color: #ccc');
 
     const text = document.createElement('a-text');
@@ -38,14 +35,8 @@ class KeyboardTemplate {
     text.setAttribute('position', '0 0 0.01');
     text.setAttribute('width', this.fontSize);
     text.setAttribute('height', this.fontSize);
-    text.setAttribute(
-        'geometry',
-        `primitive: plane; width: ${width}; height: ${height}`
-    );
-    text.setAttribute(
-        'material',
-        'opacity: 0.0; transparent: true; color: #000'
-    );
+    text.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height}`);
+    text.setAttribute('material', 'opacity: 0.0; transparent: true; color: #000');
     text.setAttribute('color', this.color);
     text.setAttribute('font', this.font);
     text.setAttribute('shader', 'msdf');
@@ -72,14 +63,8 @@ class KeyboardTemplate {
       const keyboardWidth = KEY_SIZE * 11 + KEY_PADDING * 12;
       const keyboardHeight = KEY_SIZE * keyRows.length + KEY_PADDING * (keyRows.length + 1);
 
-      keyboard.setAttribute(
-          'position',
-          `${(keyboardWidth / 2) - KEY_PADDING} ${(-keyboardHeight / 2) + KEY_PADDING} -0.01`
-      );
-      keyboard.setAttribute(
-          'geometry',
-          `primitive: box; width: ${keyboardWidth}; height: ${keyboardHeight}; depth: 0.01`
-      );
+      keyboard.setAttribute('position', `${(keyboardWidth / 2) - KEY_PADDING} ${(-keyboardHeight / 2) + KEY_PADDING} -0.01`);
+      keyboard.setAttribute('geometry', `primitive: box; width: ${keyboardWidth}; height: ${keyboardHeight}; depth: 0.01`);
       keyboard.setAttribute('material', 'color: #000');
       this.el.appendChild(keyboard);
 
