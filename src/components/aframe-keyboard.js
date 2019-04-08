@@ -94,7 +94,7 @@ AFRAME.registerComponent('a-keyboard', {
         document.dispatchEvent(inputEvent);
         break;
       case '16': // shift
-        AFK.template.toggleActiveMode();
+        AFK.template.toggleActiveMode('shift');
         break;
       case '32': // space
         inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value: ' '}});

@@ -45,13 +45,12 @@ This project is written purely with javascript, and it makes use of custom event
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
 ## Roadmap (order of priority)
-- [ ] Adding automated tests 
+- [x] Adding automated tests 
 - [ ] Improve event handling of misc keys (Ctrl, Alt, Home, End, etc)
 - [x] Create grid-like layout to automatically render keyboard as it parses `i18n` files
-- [ ] Add support for custom fonts
+- [x] Add support for custom fonts
 - [ ] Improving base keyboard models
 - [ ] Add support for custom keyboard key models
-
 
 ## Contributing
 
