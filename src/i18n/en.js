@@ -53,7 +53,7 @@ module.exports = {
     ],
     [
       {value: 'Cancel', type: 'cancel'},
-      {value: '\u2423', type: 'space'},
+      {value: '', type: 'space'},
       {value: ',', type: 'standard'},
       {value: '.', type: 'standard'},
       {value: 'Submit', type: 'submit'},
@@ -71,7 +71,7 @@ module.exports = {
       {value: '8', type: 'standard'},
       {value: '9', type: 'standard'},
       {value: '0', type: 'standard'},
-      {value: '\u232B', type: 'delete'},
+      {value: '<-', type: 'delete'},
     ],
     [
       {value: 'Q', type: 'standard'},
@@ -84,7 +84,7 @@ module.exports = {
       {value: 'I', type: 'standard'},
       {value: 'O', type: 'standard'},
       {value: 'P', type: 'standard'},
-      {value: '\u23CE', type: 'enter'},
+      {value: 'Ent', type: 'enter'},
     ],
     [
       {value: 'A', type: 'standard'},
@@ -100,7 +100,7 @@ module.exports = {
       // last one empty because Enter key spans 2 rows
     ],
     [
-      {value: '\u21E7', type: 'shift'},
+      {value: 'Shift', type: 'shift'},
       {value: 'Z', type: 'standard'},
       {value: 'X', type: 'standard'},
       {value: 'C', type: 'standard'},
@@ -130,7 +130,7 @@ module.exports = {
       {value: '8', type: 'standard'},
       {value: '9', type: 'standard'},
       {value: '0', type: 'standard'},
-      {value: '\u232B', type: 'delete'},
+      {value: '<-', type: 'delete'},
     ],
     [
       {value: '~', type: 'standard'},
@@ -143,7 +143,7 @@ module.exports = {
       {value: '÷', type: 'standard'},
       {value: 'x', type: 'standard'},
       {value: 'p', type: 'standard'},
-      {value: '\u23CE', type: 'enter'},
+      {value: 'Ent', type: 'enter'},
     ],
     [
       {value: '₤', type: 'standard'},
@@ -159,7 +159,7 @@ module.exports = {
       // last one empty because Enter key spans 2 rows
     ],
     [
-      {value: '\u21E7', type: 'shift'},
+      {value: 'Shift', type: 'shift'},
       {value: '@', type: 'standard'},
       {value: '#', type: 'standard'},
       {value: '$', type: 'standard'},

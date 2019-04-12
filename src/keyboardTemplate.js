@@ -95,6 +95,10 @@ class KeyboardTemplate {
   }
 
   toggleActiveMode(mode) {
+    if (mode === this.activeMode) {
+      this.activeMode('normal');
+      this.drawKeyboard();
+    }
     this.activeMode = mode;
     this.drawKeyboard();
   }
