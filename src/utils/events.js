@@ -1,74 +1,71 @@
 function validateKeyboardInput(e, type) {
   let inputEvent;
   const ignoredKeys = new Set([
-    83, // Shift
-    67, // Caps Lock
+    16, // Shift
+    17, // Ctrl
+    18, // Alt
+    20, // Caps Lock
+    33, // PageUp
+    34, // PageDown
+    35, // End
+    36, // Home
+    45, // Insert
+    46, // Delete
     77, // Meta key (Mac)
-    70, // F1 ~ F12
+    112, // F1
+    113, // F2
+    114, // F3
+    115, // F4
+    116, // F5
+    117, // F6
+    118, // F7
+    119, // F8
+    120, // F9
+    121, // F10
+    122, // F11
+    123, // F12
   ]);
+  const code = e.key.charCodeAt(0);
+  let value = e.key;
+  let keyCode = e.keyCode;
   if (type === 'vr') {
-    const value = document.querySelector(`#${e.target.id}`).getAttribute('value');
-    const code = document.querySelector(`#${e.target.id}`).getAttribute('key-code');
+    keyCode = parseInt(document.querySelector(`#${e.target.id}`).getAttribute('key-code'));
+    value = document.querySelector(`#${e.target.id}`).getAttribute('value');
+  }
 
-    switch (code) {
-      case '13': // enter
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value: '\n'}});
-        document.dispatchEvent(inputEvent);
-        break;
-      case '8': // backspace
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: 8, value: ''}});
-        document.dispatchEvent(inputEvent);
-        break;
-      case '9': // tab
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value: '\t'}});
-        document.dispatchEvent(inputEvent);
-        break;
-      case '16': // shift
-        AFK.template.toggleActiveMode('shift');
-        break;
-      case '32': // space
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value: ' '}});
-        document.dispatchEvent(inputEvent);
-        break;
-      default:
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value}});
-        document.dispatchEvent(inputEvent);
-        break;
-    }
-  } else {
-    const code = e.key.charCodeAt(0);
-    console.log(code);
-    if (ignoredKeys.has(code)) return;
-    switch (e.keyCode) {
-      case 9: // tab
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: '\t'}});
-        document.dispatchEvent(inputEvent);
-        break;
-      case 8: // backspace
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: ''}});
-        document.dispatchEvent(inputEvent);
-        break;
-      case 13: // enter
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: '\n'}});
-        document.dispatchEvent(inputEvent);
-        break;
-      case 27: // esc
-        if (this.dismissable) {
-          inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: ''}});
-          document.dispatchEvent(inputEvent);
-        }
-        break;
-      case 32: // space
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: e.keyCode, value: ' '}});
-        document.dispatchEvent(inputEvent);
-        break;
-      default:
-        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code, value: e.key}});
-        document.dispatchEvent(inputEvent);
-        break;
-    }
+  if (ignoredKeys.has(e.keyCode)) return;
 
-    // Artificially trigger keypress events
+  switch (keyCode) {
+    case 9: // tab
+      inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: '\t'}});
+      document.dispatchEvent(inputEvent);
+      break;
+    case 8: // backspace
+      inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: ''}});
+      document.dispatchEvent(inputEvent);
+      break;
+    case 13: // enter
+      inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: '\n'}});
+      document.dispatchEvent(inputEvent);
+      break;
+    case 27: // esc
+      if (this.dismissable) {
+        inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: ''}});
+        document.dispatchEvent(inputEvent);
+      }
+      break;
+    case 32: // space
+      inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: ' '}});
+      document.dispatchEvent(inputEvent);
+      break;
+    default:
+      inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: value}});
+      document.dispatchEvent(inputEvent);
+      break;
+  }
+
+  // Artificially trigger keypress events
+  if (type !== 'vr') {
     const key = document.querySelector(`#a-keyboard-${code}`) || document.querySelector(`#a-keyboard-${e.keyCode}`);
     if (key) {
       key.dispatchEvent(new Event('mousedown'));

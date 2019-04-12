@@ -3,14 +3,13 @@ const getIntl = require('./i18n/index');
 class KeyboardTemplate {
   constructor() {
     this.keyboardKeys = {};
-    this.activeMode = 'normal'; // 'normal', 'shift', 'alt', 'alt-shift'
+    this.activeMode = 'normal'; // 'normal', 'shift', 'alt'
   }
 
   draw(options) {
     for (const option in options) {
       this[option] = options[option];
     }
-
     this.keyboardKeys = getIntl(options.locale);
     this.drawKeyboard();
   }
