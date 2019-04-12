@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, viewport-fit=cover">
+      <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+      <script>window.AFK || document.write('<script src="../aframe-keyboard.min.js">\x3C/script>')</script>
+      <title>Aframe Keyboard Samples</title>
+      <style>
+        body {
+          font-size: 62.5%;
+          overflow: hidden;
+        }
+        html, body, canvas {
+          height: 100%;
+          width: 100%;
+          margin: 0;
+        }
+      </style>
+  </head>
+  <body>
+    <a-scene keyboard-shortcuts="enterVR: false">
+      <a-assets>
+        <img id="basicThumbnail" src="img/basic_portal.png">
+      </a-assets>
+      <!-- environment -->
+      <a-sky color="#ECECEC"></a-sky>
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+
+      <a-link class="collidable" image="#basicThumbnail" border-color="#000" color="#000" visual-aspect-enabled="false" href="basic/index.html" position="-1 1.6 -1.5" title="Basic Usage"></a-link>
+      <a-link class="collidable" image="#basicThumbnail" border-color="#000" title-color="#000" visual-aspect-enabled="false" href="basic/index.html" position="1 1.6 -1.5" title="Custom Keyboard"></a-link>
+
+      <a-entity id="mouseCursor" raycaster="objects: .collidable" cursor="rayOrigin: mouse"></a-entity>
+    </a-scene>
+    <noscript>Please turn on Javascript to view this website.</noscript>
+  </body>
+</html> 

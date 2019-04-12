@@ -28,4 +28,16 @@ suite('keyboardTemplate.js', function() {
       done();
     });
   });
+
+  suite('Toggle functions', function() {
+    test('Test if toggle to different mode works', function() {
+      keyboardTemplate.el = el;
+      keyboardTemplate.keyboardKeys = locale;
+      keyboardTemplate.toggleActiveMode('shift');
+      assert.equal(keyboardTemplate.activeMode, 'shift');
+
+      keyboardTemplate.toggleActiveMode('alt');
+      assert.equal(keyboardTemplate.activeMode, 'alt');
+    });
+  });
 });

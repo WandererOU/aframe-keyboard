@@ -3,14 +3,13 @@ const getIntl = require('./i18n/index');
 class KeyboardTemplate {
   constructor() {
     this.keyboardKeys = {};
-    this.activeMode = 'normal'; // 'normal', 'shift', 'alt', 'alt-shift'
+    this.activeMode = 'normal'; // 'normal', 'shift', 'alt'
   }
 
   draw(options) {
     for (const option in options) {
       this[option] = options[option];
     }
-
     this.keyboardKeys = getIntl(options.locale);
     this.drawKeyboard();
   }
@@ -40,6 +39,7 @@ class KeyboardTemplate {
     text.setAttribute('color', this.color);
     text.setAttribute('font', this.font);
     text.setAttribute('shader', 'msdf');
+    text.setAttribute('negate', 'false');
     text.setAttribute('keyboard-button', true);
     text.setAttribute('class', 'collidable');
 
@@ -55,7 +55,7 @@ class KeyboardTemplate {
     }
 
     if (this.keyboardKeys) {
-      const keyRows = this.keyboardKeys[this.activeMode];
+      const keyRows = this.keyboardKeys[this.activeMode] || this.keyboardKeys['normal'];
       const KEY_PADDING = 0.01;
       const KEY_SIZE = 0.03;
 
@@ -94,9 +94,8 @@ class KeyboardTemplate {
     }
   }
 
-  toggleActiveMode() {
-    this.activeMode === 'shift' ?
-      this.activeMode = 'normal' : this.activeMode = 'shift';
+  toggleActiveMode(mode) {
+    this.activeMode = mode;
     this.drawKeyboard();
   }
 

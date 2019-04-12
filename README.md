@@ -20,7 +20,6 @@ This project is written purely with javascript, and it makes use of custom event
   * Add an event listener for the `a-keyboard-update` event, and add a handler method for it (a basic one has been provided in the example)
 
 ## API
-
 | Property | Description | Default value |
 | :--: | :--: | :--: |
 | dismissable | (WIP) Allows the user to dismiss the keyboard before pressing the submit button | true |
@@ -45,16 +44,14 @@ This project is written purely with javascript, and it makes use of custom event
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
 ## Roadmap (order of priority)
-- [ ] Adding automated tests 
-- [ ] Improve event handling of misc keys (Ctrl, Alt, Home, End, etc)
+- [x] Adding automated tests 
+- [x] Improve event handling of misc keys (Ctrl, Alt, Home, End, etc)
 - [x] Create grid-like layout to automatically render keyboard as it parses `i18n` files
-- [ ] Add support for custom fonts
+- [x] Add support for custom fonts
 - [ ] Improving base keyboard models
 - [ ] Add support for custom keyboard key models
 
-
 ## Contributing
-
 1. Fork it (<https://github.com/WandererOU/aframe-keyboard/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
