@@ -22,6 +22,7 @@
     <a-scene keyboard-shortcuts="enterVR: false">
       <a-assets>
         <img id="basicThumbnail" src="img/basic_portal.png">
+        <img id="customThumbnail" src="img/custom_portal.png">
       </a-assets>
       <!-- environment -->
       <a-sky color="#ECECEC"></a-sky>
@@ -31,7 +32,7 @@
       <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
 
       <a-link class="collidable" image="#basicThumbnail" border-color="#000" color="#000" visual-aspect-enabled="false" href="basic/index.html" position="-1 1.6 -1.5" title="Basic Usage"></a-link>
-      <a-link class="collidable" image="#basicThumbnail" border-color="#000" title-color="#000" visual-aspect-enabled="false" href="basic/index.html" position="1 1.6 -1.5" title="Custom Keyboard"></a-link>
+      <a-link class="collidable" image="#customThumbnail" border-color="#000" title-color="#000" visual-aspect-enabled="false" href="custom/index.html" position="1 1.6 -1.5" title="Custom Keyboard"></a-link>
 
       <a-entity id="mouseCursor" raycaster="objects: .collidable" cursor="rayOrigin: mouse"></a-entity>
     </a-scene>

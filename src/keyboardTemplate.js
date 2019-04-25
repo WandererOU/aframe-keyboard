@@ -27,7 +27,8 @@ class KeyboardTemplate {
 
     const button = document.createElement('a-entity');
     button.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height};`);
-    if (this.keyTexture) {
+
+    if (this.keyTexture && this.keyTexture.length > 0) {
       button.setAttribute('material', `src: ${this.keyTexture}`);
     } else {
       button.setAttribute('material', 'color: #4a4a4a; opacity: 0.9');
@@ -72,7 +73,7 @@ class KeyboardTemplate {
       keyboard.setAttribute('position', `${(keyboardWidth / 2) - KEYBOARD_PADDING} ${(-keyboardHeight / 2) + KEYBOARD_PADDING} -0.01`);
       keyboard.setAttribute('geometry', `primitive: plane; width: ${keyboardWidth}; height: ${keyboardHeight}`);
 
-      if (this.baseTexture) {
+      if (this.baseTexture && this.baseTexture.length > 0) {
         keyboard.setAttribute('material', `src: ${this.baseTexture}`);
       } else {
         keyboard.setAttribute('material', 'color: #4a4a4a; side: double; opacity: 0.7');

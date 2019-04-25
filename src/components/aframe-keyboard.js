@@ -21,7 +21,6 @@ AFRAME.registerComponent('a-keyboard', {
   },
 
   init: function() {
-    console.log(this.data);
     AFK.template.draw({...this.data, el: this.el});
     this.attachEventListeners();
   },
