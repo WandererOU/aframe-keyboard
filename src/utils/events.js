@@ -11,7 +11,6 @@ function validateKeyboardInput(e, type) {
     36, // Home
     45, // Insert
     46, // Delete
-    77, // Meta key (Mac)
     112, // F1
     113, // F2
     114, // F3
