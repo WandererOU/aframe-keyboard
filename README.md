@@ -22,10 +22,11 @@ This project is written purely with javascript, and it makes use of custom event
 ## API
 | Property | Description | Default value |
 | :--: | :--: | :--: |
-| dismissable | (WIP) Allows the user to dismiss the keyboard before pressing the submit button | true |
-| model | (WIP) Relative path to a custom model (obj/mtl, or gltf) that will replace the default keys | '' |
-| font | Either a [stock font](https://aframe.io/docs/0.9.0/components/text.html#stock-fonts) key provided by aframe, or the relative path for a custom font that will be displayed on the keyboard (WIP) | 'dejavu' |
-| color | The color of fonts used in the keyboard | '#000' |
+| dismissable | Allows the user to dismiss the keyboard before pressing the submit button | true |
+| baseTexture | (WIP) Relative path to a custom texture that will replace the default keyboard base | '' |
+| keyTexture | (WIP) Relative path to a custom texture that will replace the default keys | '' |
+| font | Either a [stock font](https://aframe.io/docs/0.9.0/components/text.html#stock-fonts) key provided by aframe, or the relative path for a custom font that will be displayed on the keyboard | 'monoid' |
+| color | The color of fonts used in the keyboard | '#fff' |
 | locale | Sets which keyboard will be utilized from the `i18n` folder. Currently only `en` is supported, but additional language support is planned | 'en' |
 | audio | (WIP) Relative path to sounds that should be player when a key is pressed | '' |
 | fontSize | Size of each character printed (in aframe units) | '0.35' |

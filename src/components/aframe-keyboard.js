@@ -12,13 +12,16 @@ AFRAME.registerComponent('a-keyboard', {
     highlightColor: {default: '#1a79dc'},
     dismissable: {default: true},
     font: {default: 'monoid'},
-    fontSize: {default: '0.35'},
+    fontSize: {default: '0.39'},
     locale: {default: 'en'},
     model: {default: ''},
+    baseTexture: {default: null},
+    keyTexture: {default: null},
     verticalAlign: {default: 'center'},
   },
 
   init: function() {
+    console.log(this.data);
     AFK.template.draw({...this.data, el: this.el});
     this.attachEventListeners();
   },
