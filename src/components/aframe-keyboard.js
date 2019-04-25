@@ -8,7 +8,8 @@ if (typeof AFRAME === 'undefined') {
 AFRAME.registerComponent('a-keyboard', {
   schema: {
     audio: {default: false}, // Only if adapter supports audio
-    color: {default: '#000'},
+    color: {default: '#fff'},
+    highlightColor: {default: '#1a79dc'},
     dismissable: {default: true},
     font: {default: 'monoid'},
     fontSize: {default: '0.35'},
