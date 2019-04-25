@@ -11,7 +11,6 @@ function validateKeyboardInput(e, type) {
     36, // Home
     45, // Insert
     46, // Delete
-    77, // Meta key (Mac)
     112, // F1
     113, // F2
     114, // F3
@@ -25,15 +24,15 @@ function validateKeyboardInput(e, type) {
     122, // F11
     123, // F12
   ]);
-  const code = e.key.charCodeAt(0);
+  const code = e.key && e.key.charCodeAt(0);
   let value = e.key;
   let keyCode = e.keyCode;
   if (type === 'vr') {
     keyCode = parseInt(document.querySelector(`#${e.target.id}`).getAttribute('key-code'));
     value = document.querySelector(`#${e.target.id}`).getAttribute('value');
+  } else {
+    if (ignoredKeys.has(e.keyCode)) return;
   }
-
-  if (ignoredKeys.has(e.keyCode)) return;
 
   switch (keyCode) {
     case 9: // tab
@@ -47,6 +46,12 @@ function validateKeyboardInput(e, type) {
     case 13: // enter
       inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: '\n'}});
       document.dispatchEvent(inputEvent);
+      break;
+    case 16: // Shift
+      AFK.template.toggleActiveMode('shift');
+      break;
+    case 18: // Alt
+      AFK.template.toggleActiveMode('alt');
       break;
     case 27: // esc
       if (this.dismissable) {

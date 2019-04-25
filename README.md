@@ -22,14 +22,16 @@ This project is written purely with javascript, and it makes use of custom event
 ## API
 | Property | Description | Default value |
 | :--: | :--: | :--: |
-| dismissable | (WIP) Allows the user to dismiss the keyboard before pressing the submit button | true |
-| model | (WIP) Relative path to a custom model (obj/mtl, or gltf) that will replace the default keys | '' |
-| font | Either a [stock font](https://aframe.io/docs/0.9.0/components/text.html#stock-fonts) key provided by aframe, or the relative path for a custom font that will be displayed on the keyboard (WIP) | 'dejavu' |
-| color | The color of fonts used in the keyboard | '#000' |
+| dismissable | Allows the user to dismiss the keyboard before pressing the submit button | true |
+| baseTexture | (WIP) Relative path to a custom texture that will replace the default keyboard base | '' |
+| keyTexture | (WIP) Relative path to a custom texture that will replace the default keys | '' |
+| font | Either a [stock font](https://aframe.io/docs/0.9.0/components/text.html#stock-fonts) key provided by aframe, or the relative path for a custom font that will be displayed on the keyboard | 'monoid' |
+| color | The color of fonts used in the keyboard | '#fff' |
 | locale | Sets which keyboard will be utilized from the `i18n` folder. Currently only `en` is supported, but additional language support is planned | 'en' |
 | audio | (WIP) Relative path to sounds that should be player when a key is pressed | '' |
 | fontSize | Size of each character printed (in aframe units) | '0.35' |
 | verticalAlign | Setting the text's [baseline](https://aframe.io/docs/0.9.0/components/text.html#properties_baseline), can be set as `top`, `center`, and `bottom`  | 'center' |
+| highlightColor | The color that keys should highlight to when hovered | '#1a79dc' |
 
 ## Release History
 * 0.0.1 (Work in progress)
@@ -38,6 +40,7 @@ This project is written purely with javascript, and it makes use of custom event
     * Added `fontSize` option to set how big keys should look
     * Added `verticalAlign` option to set the `baseline` property of texts
     * Added `font` option where you can choose from one of the [stock fonts](https://aframe.io/docs/0.9.0/components/text.html#stock-fonts) to be used in the keyboard
+    * Added `highlightColor` option to change the color of keys when highlighted
     * Added basic coordinate-based layout to keyboard (looking for a fancier method that allows for customized layouts with differing button sizes and colors)
 
 ## License
@@ -48,8 +51,9 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 - [x] Improve event handling of misc keys (Ctrl, Alt, Home, End, etc)
 - [x] Create grid-like layout to automatically render keyboard as it parses `i18n` files
 - [x] Add support for custom fonts
-- [ ] Improving base keyboard models
-- [ ] Add support for custom keyboard key models
+- [x] Migrated to using planes instead of boxes to improve performance on lower-end devices
+- [x] Improving base keyboard models
+- [ ] Add support for custom keyboard key textures
 
 ## Contributing
 1. Fork it (<https://github.com/WandererOU/aframe-keyboard/fork>)

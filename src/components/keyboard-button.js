@@ -12,11 +12,11 @@ AFRAME.registerComponent('keyboard-button', {
     });
 
     el.addEventListener('mouseup', function() {
-      el.setAttribute('material', 'opacity', self.isMouseEnter ? '0.4' : '0');
+      el.setAttribute('material', 'opacity', self.isMouseEnter ? '0.9' : '0');
     });
 
     el.addEventListener('mouseenter', function() {
-      el.setAttribute('material', 'opacity', '0.4');
+      el.setAttribute('material', 'opacity', '0.9');
       self.isMouseEnter = true;
     });
 

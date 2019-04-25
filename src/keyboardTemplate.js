@@ -1,5 +1,9 @@
 const getIntl = require('./i18n/index');
 
+const KEYBOARD_PADDING = 0.02;
+const KEY_PADDING = 0.004;
+const KEY_SIZE = 0.04;
+
 class KeyboardTemplate {
   constructor() {
     this.keyboardKeys = {};
@@ -22,8 +26,13 @@ class KeyboardTemplate {
     buttonContainer.setAttribute('position', options.position);
 
     const button = document.createElement('a-entity');
-    button.setAttribute('geometry', `primitive: box; width: ${width}; height: ${height}; depth: 0.013`);
-    button.setAttribute('material', 'color: #ccc');
+    button.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height};`);
+
+    if (this.keyTexture && this.keyTexture.length > 0) {
+      button.setAttribute('material', `src: ${this.keyTexture}`);
+    } else {
+      button.setAttribute('material', 'color: #4a4a4a; opacity: 0.9');
+    }
 
     const text = document.createElement('a-text');
     text.id = `a-keyboard-${key.code}`;
@@ -31,11 +40,11 @@ class KeyboardTemplate {
     text.setAttribute('value', key.value);
     text.setAttribute('align', 'center');
     text.setAttribute('baseline', this.verticalAlign);
-    text.setAttribute('position', '0 0 0.01');
+    text.setAttribute('position', '0 0 0.001');
     text.setAttribute('width', this.fontSize);
     text.setAttribute('height', this.fontSize);
     text.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height}`);
-    text.setAttribute('material', 'opacity: 0.0; transparent: true; color: #000');
+    text.setAttribute('material', `opacity: 0.0; transparent: true; color: ${this.highlightColor}`);
     text.setAttribute('color', this.color);
     text.setAttribute('font', this.font);
     text.setAttribute('shader', 'msdf');
@@ -56,16 +65,20 @@ class KeyboardTemplate {
 
     if (this.keyboardKeys) {
       const keyRows = this.keyboardKeys[this.activeMode] || this.keyboardKeys['normal'];
-      const KEY_PADDING = 0.01;
-      const KEY_SIZE = 0.03;
 
       const keyboard = document.createElement('a-entity');
-      const keyboardWidth = KEY_SIZE * 11 + KEY_PADDING * 12;
-      const keyboardHeight = KEY_SIZE * keyRows.length + KEY_PADDING * (keyRows.length + 1);
+      const keyboardWidth = KEY_SIZE * 11 + KEY_PADDING * 10 + KEYBOARD_PADDING * 2;
+      const keyboardHeight = KEY_SIZE * keyRows.length + KEY_PADDING * (keyRows.length - 1) + KEYBOARD_PADDING * 2;
 
-      keyboard.setAttribute('position', `${(keyboardWidth / 2) - KEY_PADDING} ${(-keyboardHeight / 2) + KEY_PADDING} -0.01`);
-      keyboard.setAttribute('geometry', `primitive: box; width: ${keyboardWidth}; height: ${keyboardHeight}; depth: 0.01`);
-      keyboard.setAttribute('material', 'color: #000');
+      keyboard.setAttribute('position', `${(keyboardWidth / 2) - KEYBOARD_PADDING} ${(-keyboardHeight / 2) + KEYBOARD_PADDING} -0.01`);
+      keyboard.setAttribute('geometry', `primitive: plane; width: ${keyboardWidth}; height: ${keyboardHeight}`);
+
+      if (this.baseTexture && this.baseTexture.length > 0) {
+        keyboard.setAttribute('material', `src: ${this.baseTexture}`);
+      } else {
+        keyboard.setAttribute('material', 'color: #4a4a4a; side: double; opacity: 0.7');
+      }
+
       this.el.appendChild(keyboard);
 
       let positionY = 0;
@@ -95,8 +108,13 @@ class KeyboardTemplate {
   }
 
   toggleActiveMode(mode) {
-    this.activeMode = mode;
-    this.drawKeyboard();
+    if (mode === this.activeMode) {
+      this.activeMode = 'normal';
+      this.drawKeyboard();
+    } else {
+      this.activeMode = mode;
+      this.drawKeyboard();
+    }
   }
 
   parseKeyObjects(keyObject) {
@@ -104,21 +122,21 @@ class KeyboardTemplate {
     const value = keyObject.value;
     switch (type) {
       case 'delete':
-        return {size: '0.03 0.03 0.013', value, code: '8'};
+        return {size: `${KEY_SIZE} ${KEY_SIZE} 0`, value, code: '8'};
       case 'enter':
-        return {size: '0.03 0.07 0.013', value, code: '13'};
+        return {size: `${KEY_SIZE} ${(KEY_SIZE * 2) + KEY_PADDING} 0`, value, code: '13'};
       case 'shift':
-        return {size: '0.07 0.03 0.013', value, code: '16'};
+        return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '16'};
       case 'alt':
-        return {size: '0.07 0.03 0.013', value, code: '18'};
+        return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '18'};
       case 'space':
-        return {size: '0.19 0.03 0.013', value, code: '32'};
+        return {size: `${(KEY_SIZE * 5) + (KEY_PADDING * 4)} ${KEY_SIZE} 0`, value, code: '32'};
       case 'cancel':
-        return {size: '0.07 0.03 0.013', value, code: '998'};
+        return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '998'};
       case 'submit':
-        return {size: '0.07 0.03 0.013', value, code: '999'};
+        return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '999'};
       default:
-        return {size: '0.03 0.03 0.013', value, code: value.charCodeAt(0)};
+        return {size: `${KEY_SIZE} ${KEY_SIZE} 0`, value, code: value.charCodeAt(0)};
     }
   }
 }
