@@ -22,38 +22,29 @@ This project is written purely with javascript, and it makes use of custom event
 ## API
 | Property | Description | Default value |
 | :--: | :--: | :--: |
-| dismissable | Allows the user to dismiss the keyboard before pressing the submit button | true |
-| baseTexture | (WIP) Relative path to a custom texture that will replace the default keyboard base | '' |
-| keyTexture | (WIP) Relative path to a custom texture that will replace the default keys | '' |
-| font | Either a [stock font](https://aframe.io/docs/0.9.0/components/text.html#stock-fonts) key provided by aframe, or the relative path for a custom font that will be displayed on the keyboard | 'monoid' |
-| color | The color of fonts used in the keyboard | '#fff' |
-| locale | Sets which keyboard will be utilized from the `i18n` folder. Currently only `en` is supported, but additional language support is planned | 'en' |
 | audio | (WIP) Relative path to sounds that should be player when a key is pressed | '' |
+| baseTexture | Relative path to a custom texture that will replace the default keyboard base | '' |
+| color | The color of fonts used in the keyboard | '#fff' |
+| dismissable | Allows the user to dismiss the keyboard before pressing the submit button | true |
+| font | Either a [stock font](https://aframe.io/docs/0.9.0/components/text.html#stock-fonts) key provided by aframe, or the relative path for a custom font that will be displayed on the keyboard | 'monoid' |
 | fontSize | Size of each character printed (in aframe units) | '0.35' |
-| verticalAlign | Setting the text's [baseline](https://aframe.io/docs/0.9.0/components/text.html#properties_baseline), can be set as `top`, `center`, and `bottom`  | 'center' |
 | highlightColor | The color that keys should highlight to when hovered | '#1a79dc' |
+| keyTexture | Relative path to a custom texture that will replace the default keys | '' |
+| locale | Sets which keyboard will be utilized from the `i18n` folder. Currently only `en` is supported, but additional language support is planned | 'en' |
+| verticalAlign | Setting the text's [baseline](https://aframe.io/docs/0.9.0/components/text.html#properties_baseline), can be set as `top`, `center`, and `bottom`  | 'center' |
 
 ## Release History
-* 0.0.1 (Work in progress)
-    * Added `color` option to define which colors the text should be rendered with
-    * Added `dismissable` option to define whether keyboard can be dismissed before being "Submitted"
-    * Added `fontSize` option to set how big keys should look
-    * Added `verticalAlign` option to set the `baseline` property of texts
-    * Added `font` option where you can choose from one of the [stock fonts](https://aframe.io/docs/0.9.0/components/text.html#stock-fonts) to be used in the keyboard
-    * Added `highlightColor` option to change the color of keys when highlighted
-    * Added basic coordinate-based layout to keyboard (looking for a fancier method that allows for customized layouts with differing button sizes and colors)
-
+Please see `CHANGELOG.md` for more information on releases.
+  
 ## License
-Distributed under the MIT license. See ``LICENSE`` for more information.
+Distributed under the MIT license. See `LICENSE` for more information.
 
 ## Roadmap (order of priority)
-- [x] Adding automated tests 
-- [x] Improve event handling of misc keys (Ctrl, Alt, Home, End, etc)
-- [x] Create grid-like layout to automatically render keyboard as it parses `i18n` files
-- [x] Add support for custom fonts
-- [x] Migrated to using planes instead of boxes to improve performance on lower-end devices
-- [x] Improving base keyboard models
-- [ ] Add support for custom keyboard key textures
+- [ ] Changing positioning of Dismiss / Submit buttons to improve UX
+- [ ] Adding `audio` option to add sound effects to keyboard
+- [ ] Adding symbols to `Enter` and `Backspace` keys instead of presenting text
+- [ ] Adding ability to move keyboard position in VR mode (by physically dragging it)
+  - [ ] Add option to keep keyboard always fixed in place
 
 ## Contributing
 1. Fork it (<https://github.com/WandererOU/aframe-keyboard/fork>)

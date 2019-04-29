@@ -14,10 +14,10 @@ suite('keyboardTemplate.js', function() {
     test('Test if draw function receives attributes', function() {
       const el = helpers.entityFactory({'id': 'keyboard', 'aframe-keyboard': true});
       const options = {};
-      options.color = '#000';
+      options.color = '#eee';
 
       keyboardTemplate.draw({...options, el});
-      assert.equal(keyboardTemplate.color, '#000');
+      assert.equal(keyboardTemplate.color, '#eee');
     });
 
     test('Test whether drawKeyboard fires successfully', function(done) {
