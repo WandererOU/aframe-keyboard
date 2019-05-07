@@ -19,7 +19,7 @@ This project is written purely with javascript, and it makes use of custom event
   * Add the `keyboard-shortcuts="enterVR: false"` attribute to the scene element to prevent it from triggering the VR mode when pressing `F` on desktops (users can still enter it by pressing the button in the bottom-right corner)
   * Add an event listener for the `a-keyboard-update` event, and add a handler method for it (a basic one has been provided in the example)
 
-## API
+### API
 | Property | Description | Default value |
 | :--: | :--: | :--: |
 | audio | (WIP) Relative path to sounds that should be player when a key is pressed | '' |
@@ -32,6 +32,12 @@ This project is written purely with javascript, and it makes use of custom event
 | keyTexture | Relative path to a custom texture that will replace the default keys | '' |
 | locale | Sets which keyboard will be utilized from the `i18n` folder. Currently only `en` is supported, but additional language support is planned | 'en' |
 | verticalAlign | Setting the text's [baseline](https://aframe.io/docs/0.9.0/components/text.html#properties_baseline), can be set as `top`, `center`, and `bottom`  | 'center' |
+
+### Events
+
+| Event Name | Function | Notes | 
+| :--: | :--: | :--: |
+| `a-keyboard-update` | Returns the keycode value of the key that was pressed | The `Submit` key returns code `999`, and the `Cancel` key returns `998` (specific logic about _how_ to remove your keyboard is best left to each developer, you may want to set `visible` to `false` or entirely remove the entity) |
 
 ## Release History
 Please see `CHANGELOG.md` for more information on releases.

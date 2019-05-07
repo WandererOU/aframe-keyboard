@@ -8,7 +8,7 @@
     "test:firefox": "./node_modules/.bin/karma start karma.conf.js --browsers Firefox",
     "test:chrome": "./node_modules/.bin/karma start karma.conf.js --browsers Chrome",
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "check": "./node_modules/.bin/eslint --ignore-pattern node_modules --ignore-pattern non_npm_dependencies --ignore-pattern dist --ext .js --ext .jsx . --quiet"
+    "check": "./node_modules/.bin/eslint --ignore-pattern node_modules --ignore-pattern non_npm_dependencies --ignore-pattern dist --ignore-pattern examples --ext .js --ext .jsx . --quiet"
   },
   "author": "Andre Vasconcelos (Wånderer Studio)",
   "license": "MIT",

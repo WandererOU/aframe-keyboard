@@ -3,6 +3,7 @@ const getIntl = require('./i18n/index');
 const KEYBOARD_PADDING = 0.02;
 const KEY_PADDING = 0.004;
 const KEY_SIZE = 0.04;
+const KEY_COLOR = '#4a4a4a';
 
 class KeyboardTemplate {
   constructor() {
@@ -31,7 +32,7 @@ class KeyboardTemplate {
     if (this.keyTexture && this.keyTexture.length > 0) {
       button.setAttribute('material', `src: ${this.keyTexture}`);
     } else {
-      button.setAttribute('material', 'color: #4a4a4a; opacity: 0.9');
+      button.setAttribute('material', `color: ${KEY_COLOR}; opacity: 0.9`);
     }
 
     const text = document.createElement('a-text');
@@ -44,12 +45,10 @@ class KeyboardTemplate {
     text.setAttribute('width', this.fontSize);
     text.setAttribute('height', this.fontSize);
     text.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height}`);
-    text.setAttribute('material', `opacity: 0.0; transparent: true; color: ${this.highlightColor}`);
+    text.setAttribute('material', `opacity: 0.0; transparent: true; color: #fff`);
     text.setAttribute('color', this.color);
     text.setAttribute('font', this.font);
-    text.setAttribute('shader', 'msdf');
-    text.setAttribute('negate', 'false');
-    text.setAttribute('keyboard-button', true);
+    text.setAttribute('keyboard-button', `highlightColor: ${this.highlightColor}; keyColor: ${KEY_COLOR}`);
     text.setAttribute('class', 'collidable');
 
     buttonContainer.appendChild(button);

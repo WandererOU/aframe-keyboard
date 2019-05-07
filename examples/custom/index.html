@@ -48,25 +48,29 @@
     <script>
       var input = ''
       function updateInput(e) {
-        var code = parseInt(e.detail.code)
+        var code = parseInt(e.detail.code);
         switch(code) {
         case 8:
-          input = input.slice(0, -1)
-          break
+          input = input.slice(0, -1);
+          break;
         case 999:
-          alert('submitted')
-          var keyboard = document.querySelector('#keyboard')
-          document.querySelector('#input').setAttribute('value', input)
-          document.querySelector('#input').setAttribute('color', 'blue')
-          keyboard.parentNode.removeChild(keyboard)
-          return
+          alert('submitted');
+          var keyboard = document.querySelector('#keyboard');
+          document.querySelector('#input').setAttribute('value', input);
+          document.querySelector('#input').setAttribute('color', 'blue');
+          keyboard.parentNode.removeChild(keyboard);
+          break;
+        case 998: 
+          var keyboard = document.querySelector('#keyboard');
+          keyboard.parentElement.removeChild(keyboard);
+          break;
         default:
-          input = input + e.detail.value
-          break
+          input = input + e.detail.value;
+          break;
         }
-        document.querySelector('#input').setAttribute('value', input + '_')
+        document.querySelector('#input').setAttribute('value', input + '_');
       }
-      document.addEventListener('a-keyboard-update', updateInput)
+      document.addEventListener('a-keyboard-update', updateInput);
     </script>
   </body>
 </html> 

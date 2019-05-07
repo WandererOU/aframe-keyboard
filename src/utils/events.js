@@ -63,6 +63,10 @@ function validateKeyboardInput(e, type) {
       inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: ' '}});
       document.dispatchEvent(inputEvent);
       break;
+    case 998:
+      inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: ''}});
+      document.dispatchEvent(inputEvent);
+      break;
     default:
       inputEvent = new CustomEvent('a-keyboard-update', {detail: {code: keyCode, value: value}});
       document.dispatchEvent(inputEvent);
