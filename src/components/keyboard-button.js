@@ -27,23 +27,42 @@ AFRAME.registerComponent('keyboard-button', {
     });
 
     el.addEventListener('mouseenter', function() {
+      self.removeAnimations(el);
+      self.removeAnimations(button);
+
       button.setAttribute('material', 'opacity', '0.9');
       button.setAttribute('material', 'color', highlightColor);
-      el.setAttribute('position', '0 0 0.01');
-      button.setAttribute('position', '0 0 0.01');
-      el.setAttribute('scale', '1.15 1.15 0');
-      button.setAttribute('scale', '1.15 1.15 0');
+      self.attachMouseEnterAnimations(el);
+      self.attachMouseEnterAnimations(button);
+
       self.isMouseEnter = true;
     });
 
     el.addEventListener('mouseleave', function() {
       button.setAttribute('material', 'opacity', '1');
       button.setAttribute('material', 'color', color);
-      el.setAttribute('position', '0 0 0');
-      button.setAttribute('position', '0 0 0');
-      el.setAttribute('scale', '1 1 0');
-      button.setAttribute('scale', '1 1 0');
+
+      self.attachMouseLeaveAnimations(el);
+      self.attachMouseLeaveAnimations(button);
       self.isMouseEnter = false;
     });
+  },
+
+  attachMouseEnterAnimations: function(el) {
+    el.setAttribute('animation__mouseenter_position', 'property: position; to: 0 0 0.015; dur: 200; autoplay: true;');
+    el.setAttribute('animation__mouseenter_scale', 'property: scale; to: 1.1 1.1 1; dur: 200; autoplay: true;');
+  },
+
+  attachMouseLeaveAnimations: function(el) {
+    el.setAttribute('animation__mouseleave_position', 'property: position; to: 0 0 0; autoplay: true; dur: 200');
+    el.setAttribute('animation__mouseleave_scale', 'property: scale; to: 1 1 1; autoplay: true; dur: 200');
+  },
+
+  removeAnimations: function(el) {
+    el.removeAttribute('animation__mouseenter_position');
+    el.removeAttribute('animation__mouseenter_scale');
+
+    el.removeAttribute('animation__mouseleave_position');
+    el.removeAttribute('animation__mouseleave_scale');
   },
 });
