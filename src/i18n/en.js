@@ -52,10 +52,11 @@ module.exports = {
       {value: 'Alt', type: 'alt'},
     ],
     [
-      {value: 'Cancel', type: 'cancel'},
+      {value: '', type: 'standard'},
+      {value: '', type: 'standard'},
       {value: '', type: 'space'},
-      {value: ',', type: 'standard'},
       {value: '.', type: 'standard'},
+      {value: ',', type: 'standard'},
       {value: 'Submit', type: 'submit'},
     ],
   ],
@@ -111,7 +112,6 @@ module.exports = {
       {value: 'Alt', type: 'alt'},
     ],
     [
-      {value: 'Cancel', type: 'cancel'},
       {value: '', type: 'space'},
       {value: ',', type: 'standard'},
       {value: '.', type: 'standard'},
@@ -170,7 +170,6 @@ module.exports = {
       {value: 'Alt', type: 'alt'},
     ],
     [
-      {value: 'Cancel', type: 'cancel'},
       {value: '', type: 'space'},
       {value: ',', type: 'standard'},
       {value: '.', type: 'standard'},

@@ -21,40 +21,42 @@ class KeyboardTemplate {
 
   drawButton(options) {
     const key = options.key;
-    const width = key.size.split(' ')[0];
-    const height = key.size.split(' ')[1];
-    const buttonContainer = document.createElement('a-entity');
-    buttonContainer.setAttribute('position', options.position);
+    // Ignoring keys that don't have a valid code
+    if (key && !isNaN(key.code)) {
+      const width = key.size.split(' ')[0];
+      const height = key.size.split(' ')[1];
+      const buttonContainer = document.createElement('a-entity');
+      buttonContainer.setAttribute('position', options.position);
 
-    const button = document.createElement('a-entity');
-    button.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height};`);
+      const button = document.createElement('a-entity');
+      button.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height};`);
 
-    if (this.keyTexture && this.keyTexture.length > 0) {
-      button.setAttribute('material', `src: ${this.keyTexture}`);
-    } else {
-      button.setAttribute('material', `color: ${KEY_COLOR}; opacity: 0.9`);
+      if (this.keyTexture && this.keyTexture.length > 0) {
+        button.setAttribute('material', `src: ${this.keyTexture}`);
+      } else {
+        button.setAttribute('material', `color: ${KEY_COLOR}; opacity: 0.9`);
+      }
+      const text = document.createElement('a-text');
+      text.id = `a-keyboard-${key.code}`;
+      text.setAttribute('key-code', key.code);
+      text.setAttribute('value', key.value);
+      text.setAttribute('align', 'center');
+      text.setAttribute('baseline', this.verticalAlign);
+      text.setAttribute('position', '0 0 0.001');
+      text.setAttribute('width', this.fontSize);
+      text.setAttribute('height', this.fontSize);
+      text.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height}`);
+      text.setAttribute('material', `opacity: 0.0; transparent: true; color: #fff`);
+      text.setAttribute('color', this.color);
+      text.setAttribute('font', this.font);
+      text.setAttribute('keyboard-button', `highlightColor: ${this.highlightColor}; keyColor: ${KEY_COLOR}`);
+      text.setAttribute('class', 'collidable');
+
+      buttonContainer.appendChild(button);
+      buttonContainer.appendChild(text);
+
+      this.el.appendChild(buttonContainer);
     }
-
-    const text = document.createElement('a-text');
-    text.id = `a-keyboard-${key.code}`;
-    text.setAttribute('key-code', key.code);
-    text.setAttribute('value', key.value);
-    text.setAttribute('align', 'center');
-    text.setAttribute('baseline', this.verticalAlign);
-    text.setAttribute('position', '0 0 0.001');
-    text.setAttribute('width', this.fontSize);
-    text.setAttribute('height', this.fontSize);
-    text.setAttribute('geometry', `primitive: plane; width: ${width}; height: ${height}`);
-    text.setAttribute('material', `opacity: 0.0; transparent: true; color: #fff`);
-    text.setAttribute('color', this.color);
-    text.setAttribute('font', this.font);
-    text.setAttribute('keyboard-button', `highlightColor: ${this.highlightColor}; keyColor: ${KEY_COLOR}`);
-    text.setAttribute('class', 'collidable');
-
-    buttonContainer.appendChild(button);
-    buttonContainer.appendChild(text);
-
-    this.el.appendChild(buttonContainer);
   }
 
   drawKeyboard() {
@@ -67,7 +69,17 @@ class KeyboardTemplate {
 
       const keyboard = document.createElement('a-entity');
       const keyboardWidth = KEY_SIZE * 11 + KEY_PADDING * 10 + KEYBOARD_PADDING * 2;
-      const keyboardHeight = KEY_SIZE * keyRows.length + KEY_PADDING * (keyRows.length - 1) + KEYBOARD_PADDING * 2;
+      let keyboardHeight = KEY_SIZE * keyRows.length + KEY_PADDING * (keyRows.length - 1) + KEYBOARD_PADDING * 2;
+      let positionY = 0;
+
+      if (this.dismissable) {
+        keyboardHeight = KEY_SIZE * (keyRows.length + 1) + KEY_PADDING * (keyRows.length - 1) + KEYBOARD_PADDING * 2;
+        positionY = -(KEY_SIZE + KEY_PADDING);
+        this.drawButton({
+          key: {size: `${KEY_SIZE} ${KEY_SIZE} 0`, value: 'X', code: '998'},
+          position: `${KEY_SIZE * 10 + KEY_PADDING * 10 + KEYBOARD_PADDING} ${-KEYBOARD_PADDING + KEY_PADDING} 0`,
+        });
+      }
 
       keyboard.setAttribute('position', `${(keyboardWidth / 2) - KEYBOARD_PADDING} ${(-keyboardHeight / 2) + KEYBOARD_PADDING} -0.01`);
       keyboard.setAttribute('geometry', `primitive: plane; width: ${keyboardWidth}; height: ${keyboardHeight}`);
@@ -80,16 +92,12 @@ class KeyboardTemplate {
 
       this.el.appendChild(keyboard);
 
-      let positionY = 0;
       for (let i = 0; i < keyRows.length; i++) {
         const keys = keyRows[i];
         let positionX = 0;
         for (let j = 0; j < keys.length; j++) {
           const keyObject = keys[j];
           const key = this.parseKeyObjects(keyObject);
-          if (!this.dismissable && keyObject.type === 'cancel') {
-            continue;
-          }
           const width = key.size.split(' ')[0];
           const height = key.size.split(' ')[1];
           this.drawButton({
@@ -98,6 +106,7 @@ class KeyboardTemplate {
           });
           positionX += parseFloat(width) + KEY_PADDING;
 
+          // Place each row lower than the previous
           if (keys.length === (j + 1)) {
             positionY -= KEY_SIZE + KEY_PADDING;
           }
@@ -130,8 +139,6 @@ class KeyboardTemplate {
         return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '18'};
       case 'space':
         return {size: `${(KEY_SIZE * 5) + (KEY_PADDING * 4)} ${KEY_SIZE} 0`, value, code: '32'};
-      case 'cancel':
-        return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '998'};
       case 'submit':
         return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '999'};
       default:
