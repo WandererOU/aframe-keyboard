@@ -132,9 +132,11 @@ class KeyboardTemplate {
       case 'space':
         return {size: `${(KEY_SIZE * 5) + (KEY_PADDING * 4)} ${KEY_SIZE} 0`, value, code: '32'};
       case 'cancel':
-        return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '998'};
+        // ASCII "CAN" used for cancel event
+        return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '24'};
       case 'submit':
-        return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '999'};
+        // ASCII "ACK" used for submit events
+        return {size: `${(KEY_SIZE * 2) + KEY_PADDING} ${KEY_SIZE} 0`, value, code: '06'};
       default:
         return {size: `${KEY_SIZE} ${KEY_SIZE} 0`, value, code: value.charCodeAt(0)};
     }
