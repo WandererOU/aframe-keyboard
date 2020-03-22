@@ -15,8 +15,8 @@ AFRAME.registerComponent('a-keyboard', {
     fontSize: {default: '0.39'},
     locale: {default: 'en'},
     model: {default: ''},
-    baseTexture: {default: null},
-    keyTexture: {default: null},
+    baseTexture: {default: ''},
+    keyTexture: {default: ''},
     verticalAlign: {default: 'center'},
   },
 
