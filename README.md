@@ -1,5 +1,5 @@
 # aframe-keyboard
-> An Aframe component that renders a fully functional 3D keyboard, that works on mobile, desktop browers, and VR headsets!
+> An Aframe component that renders a fully functional 3D keyboard, that works on mobile, desktop browsers, and VR headsets!
 
 ![](readme.png)
 
@@ -13,7 +13,7 @@ This project is written purely with javascript, and it makes use of custom event
 1. Import [aframe](https://aframe.io) into your project (it should load before any other aframe lib)
 2. Add the file `dist/aframe-keyboard.min.js` to your project and load it into a `script` tag
 3. Following the example project in `examples/basic/index.js`:
-  * Add a scene to you `html` document, and inside it at an `a-entity` element
+  * Add a scene to your `html` document, and inside it at an `a-entity` element
   * Set its `id` to `keyboard`, and add the `a-keyboard` attribute to it
   * Add a mouse entity to collide with the keyboard by adding an `a-entity` with the attributes `raycaster="objects: .collidable" cursor="rayOrigin: mouse"`
   * Add the `keyboard-shortcuts="enterVR: false"` attribute to the scene element to prevent it from triggering the VR mode when pressing `F` on desktops (users can still enter it by pressing the button in the bottom-right corner)
